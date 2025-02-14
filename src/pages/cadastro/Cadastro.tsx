@@ -141,7 +141,7 @@ function Cadastro() { // Função que representa a tela de cadastro
             </button>
             <button
               type='submit' 
-              className='rounded text-white bg-indigo-400 hover:bg-indigo-900 w-1/2 py-2'>
+              className='rounded text-white bg-indigo-400 hover:bg-indigo-900 w-1/2 py-2 flex justify-center'>
                 {isLoading? <RotatingLines // Componente de loading
                   strokeColor='white'
                   strokeWidth='5'
