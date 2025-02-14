@@ -2,6 +2,8 @@ import { createContext, ReactNode, useState } from "react";
 import UsuarioLogin from "../models/UsuarioLogin";
 import { login } from "../services/Service";
 
+//? O que é Contexto? 
+//* O Contexto é uma forma de compartilhar informações entre componentes sem precisar passar propriedades manualmente em cada componente filho até chegar no componente que precisa da informação compartilhada.  
 
 interface AuthContextProps { // Definindo o formato do objeto que será passado para o createContext
   usuario: UsuarioLogin // O usuário logado
@@ -14,7 +16,7 @@ interface AuthProviderProps { // Definindo o formato do objeto que será passado
   children: ReactNode // O conteúdo que será exibido dentro do AuthProvider
 } // ReactNode é um tipo do TypeScript que aceita qualquer coisa que o React aceita
 
-export const AuthContex = createContext({} as AuthContextProps) // Criando o contexto
+export const  AuthContext = createContext({} as AuthContextProps) // Criando o contexto
 
 export function AuthProvider ({children}: AuthProviderProps) { // Criando o componente que irá prover o contexto
 
@@ -52,8 +54,8 @@ export function AuthProvider ({children}: AuthProviderProps) { // Criando o comp
   } // O usuário logado
 
   return ( // Retornando o contexto
-    <AuthContex.Provider value={{usuario, handleLogin, handleLogout, isLoading}}>
+    <AuthContext.Provider value={{usuario, handleLogin, handleLogout, isLoading}}>
       {children} 
-    </AuthContex.Provider>
+    </AuthContext.Provider>
   ) // O conteúdo que será exibido dentro do AuthProvider
 }
