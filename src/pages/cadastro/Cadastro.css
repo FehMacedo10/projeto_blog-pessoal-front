@@ -1,4 +1,4 @@
-.fundoCadastro {
+.fundoCadastro { // Classe que será usada no componente Cadastro.js
   background-image: url("https://i.imgur.com/ZZFAmzo.jpg");
   background-repeat: no-repeat;
   width: 100%;

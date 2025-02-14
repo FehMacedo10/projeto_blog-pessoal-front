@@ -1,4 +1,4 @@
-.fundoLogin {
+.fundoLogin { //classe que será usada no componente Login.js
   background-image: url("https://i.imgur.com/ZZFAmzo.jpg");
   background-repeat: no-repeat;
   min-height: 100vh;
