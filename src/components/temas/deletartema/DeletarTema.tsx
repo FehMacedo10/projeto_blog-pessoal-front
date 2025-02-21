@@ -1,22 +1,32 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useContext, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { AuthContext } from "../../contexts/AuthContext"
-import Tema from "../../models/Tema"
-import { buscar, deletar } from "../../services/Service"
+import { AuthContext } from "../../../contexts/AuthContext"
+import Tema from "../../../models/Tema"
+import { buscar, deletar } from "../../../services/Service"
 import { RotatingLines } from "react-loader-spinner"
 
 function DeletarTema() { // Função que define o componente DeletarTema
 
+  // Hook para gerenciar a navegação do usuário
   const navigate = useNavigate(); // Hook de navegação
 
+  // Váriavel de Estado que recebe os dados de um Tema
   const [tema, setTema] = useState<Tema>({} as Tema); // Estado que armazena o tema
+
+  // Variavel de Estado que serve para indicar que existe um carregamento ocorrendo
   const [isLoading, setIsLoading] = useState<boolean>(false); // Estado que armazena se está carregando
 
+
+  // useContext acessa nosso contexto, buscando dele as informações necessárias para esse Componente
   const { usuario, handleLogout } = useContext(AuthContext) // Desestruturação do AuthContext
   const token = usuario.token // Token do usuário
 
+  // Hook que pega uma variavel que foi passada pela rota do navegador - similar ao PathVariable do back
   const { id } = useParams<{ id: string }>() // Desestruturação dos parâmetros da URL
 
+  // Função que chama a service buscar() para receber os dados de um Tema especifico - usada na atualização
   async function buscarPorId(id: string) { // Função para buscar um tema pelo ID
     try {
       await buscar(`/temas/${id}`, setTema, { // Busca um tema pelo ID
@@ -29,6 +39,8 @@ function DeletarTema() { // Função que define o componente DeletarTema
     }
   }
 
+
+  // Esse useEffect verifica se quando o usuário acessou esse componente, ele tem um token válido
   useEffect(() => { // Hook de efeito
     if (token === '') { // Se o token for vazio
       alert('Você precisa estar logado') // Alerta que o usuário precisa estar logado
@@ -36,17 +48,21 @@ function DeletarTema() { // Função que define o componente DeletarTema
     }
   }, [token]) // Dependência do hook
 
+
+  // Esse useEffect verifica se existe um ID, se sim, 
+  // quer dizer que estamos fazendo uma atualização e chamamos a função buscarPorId
   useEffect(() => { // Hook de efeito
     if (id !== undefined) { // Se o ID não for indefinido
       buscarPorId(id) // Busca um tema pelo ID
     }
   }, [id]) // Dependência do hook
 
+  // Função que realiza a Exclusão de um Tema
   async function deletartema() { // Função para deletar um tema
-    setIsLoading(true) // Define que está carregando
+    setIsLoading(true) // Atualiza a Variavel de Estado, indicando que existe uma carregamento ocorrendo
 
     try { // Tenta deletar um tema
-      await deletar(`/temas/${id}`, { // Deleta um tema pelo ID
+      await deletar(`/temas/${id}`, { // Chama a service Deletar
         headers: { 'Authorization': token } // Define o cabeçalho da requisição
       })
       alert('Tema deletado com sucesso') // Alerta que o tema foi deletado com sucesso
@@ -58,11 +74,13 @@ function DeletarTema() { // Função que define o componente DeletarTema
       }
     }
 
-    setIsLoading(false) // Define que não está carregando
-    retornar() // Retorna para a rota de temas
+    setIsLoading(false) // Atualiza a Variavel de Estado, indicando que o carregamento parou
+    retornar() // Chama a função retornar()
 
   }
 
+
+  // Função que envia o usuário para a rota de listagem de temas
   function retornar() { // Função para retornar para a rota de temas
     navigate('/temas') // Navega para a rota de temas
   }
@@ -88,7 +106,7 @@ function DeletarTema() { // Função que define o componente DeletarTema
           <button
             className="w-full text-slate-100 bg-indigo-400 hover:bg-indigo-600 flex items-center justify-center"
             onClick={deletartema}>
-            {isLoading ?
+            {isLoading ? // Se houver um carregamento, mostre um Loader
               <RotatingLines
                 strokeColor="white"
                 strokeWidth="5"
@@ -96,6 +114,7 @@ function DeletarTema() { // Função que define o componente DeletarTema
                 width="24"
                 visible={true}
               /> :
+              // Se NÃO um carregamento acontecendo, o texto que aparece é Sim
               <span>Sim</span>
             }
           </button>

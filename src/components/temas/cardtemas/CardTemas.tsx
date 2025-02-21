@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom'
 import Tema from '../../../models/Tema'
 
 interface CardTemasProps { // Definindo a interface CardTemasProps
-  tema: Tema
+  tema: Tema // Indicamos que a prop tema é um Objeto (do Tipo/da Model) Tema
 }
 
-function CardTemas({ tema }: CardTemasProps) { // Função CardTemas -> recebe um tema
+function CardTemas({ tema }: CardTemasProps) { // Passamos a props tema para o card
   return (
     <div className='border flex flex-col rounded-2xl overflow-hidden justify-between'>
       <header className='py-2 px-6 bg-indigo-800 text-white font-bold text-2xl'>Tema</header>
@@ -20,7 +20,7 @@ function CardTemas({ tema }: CardTemasProps) { // Função CardTemas -> recebe u
           <button>Deletar</button>
         </Link>
       </div>
-    
+
     </div>
   )
 }
