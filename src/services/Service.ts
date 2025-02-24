@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const api = axios.create({ // Cria uma instância do axios
-  baseURL: "https://blogpessoal-xy3s.onrender.com" // Define a URL base da API
+export const api = axios.create({ // Cria uma instância do axios
+  baseURL: import.meta.env.VITE_API_URL // Define a URL base da API
 })
 
 export const cadastrarUsuario = async (url: string, dados: Object, setDados: Function) => { // Função para cadastrar um usuário
