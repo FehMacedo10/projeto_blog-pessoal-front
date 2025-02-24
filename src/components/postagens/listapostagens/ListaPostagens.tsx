@@ -7,6 +7,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import Postagem from "../../../models/Postagem";
 import { buscar } from "../../../services/Service";
 import { DNA } from "react-loader-spinner";
+import { ToastAlerta } from "../../../utils/ToastAlert";
 
 
 function ListaPostagens() {
@@ -39,7 +40,7 @@ function ListaPostagens() {
   // Esse useEffect verifica se quando o usuário acessou esse componente, ele tem um token válido
   useEffect(() => { // Hook do React para executar a função uma única vez
     if (token === '') { // Verifica se o token está vazio
-      alert("Você precisa estar logado"); //  Exibe um alerta
+      ToastAlerta("Você precisa estar logado", "info"); //  Exibe um alerta
       navigate('/'); // Redireciona para a página inicial
     }
   }, [token]) // Dependência do hook

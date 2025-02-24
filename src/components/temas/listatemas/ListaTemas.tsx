@@ -8,6 +8,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import Tema from "../../../models/Tema";
 import CardTemas from "../cardtemas/CardTemas";
 import { buscar } from "../../../services/Service";
+import { ToastAlerta } from "../../../utils/ToastAlert";
 
 function ListaTemas() {
 
@@ -37,7 +38,7 @@ function ListaTemas() {
   // Esse useEffect verifica se quando o usuário acessou esse componente, ele tem um token válido
   useEffect(() => {
     if (token === '') { // Se o token for vazio
-      alert("Você precisa estar logado!")
+      ToastAlerta("Você precisa estar logado!", "info")
       navigate("/")   // Navega para a rota inicial
     }
   }, [token]) // Dependência do useEffect

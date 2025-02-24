@@ -7,6 +7,7 @@ import Postagem from "../../../models/Postagem";
 import Tema from "../../../models/Tema";
 import { atualizar, buscar, cadastrar } from "../../../services/Service";
 import { RotatingLines } from "react-loader-spinner";
+import { ToastAlerta } from "../../../utils/ToastAlert";
 
 function FormPostagem() {
   // Hook para gerenciar a navegação do usuário
@@ -80,7 +81,7 @@ function FormPostagem() {
   // Esse useEffect verifica se quando o usuário acessou esse componente, ele tem um token válido
   useEffect(() => { // Efeito colateral
     if (token === "") { // Token vazio
-      alert("Você precisa estar logado"); // Alerta
+      ToastAlerta("Você precisa estar logado", "info"); // Alerta
       navigate("/"); // Navegação
     }
   }, [token])
@@ -133,12 +134,12 @@ function FormPostagem() {
             Authorization: token // Token de autenticação
           },
         });
-        alert("Postagem atualizada com sucesso"); // Alerta
+        ToastAlerta("Postagem atualizada com sucesso", "sucesso"); // Alerta
       } catch (error: any) { // Tratamento de erro
         if (error.toString().includes("403")) { // Erro 403
           handleLogout(); // Logout
         } else { // Senão
-          alert("Erro ao atualizar a postagem"); // Alerta
+          ToastAlerta("Erro ao atualizar a postagem", "erro"); // Alerta
         }
       }
     } else { // Se o ID não existir é um processo de cadastro
@@ -148,12 +149,12 @@ function FormPostagem() {
             Authorization: token // Token de autenticação
           },
         })
-        alert("Postagem cadastrada com sucesso"); // Alerta
+        ToastAlerta("Postagem cadastrada com sucesso", "sucesso"); // Alerta
       } catch (error: any) { // Tratamento de erro
         if (error.toString().includes("403")) { // Erro 403
           handleLogout(); // Logout
         } else { // Senão
-          alert("Erro ao cadastrar a postagem"); // Alerta
+          ToastAlerta("Erro ao cadastrar a postagem", "erro"); // Alerta
         }
       }
     }

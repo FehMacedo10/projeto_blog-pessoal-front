@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { AuthContext } from "../../../contexts/AuthContext";
 import Tema from "../../../models/Tema";
 import { atualizar, buscar, cadastrar } from "../../../services/Service";
+import { ToastAlerta } from "../../../utils/ToastAlert";
 
 function FormTema() {
 
@@ -42,7 +43,7 @@ function FormTema() {
   // Esse useEffect verifica se quando o usuário acessou esse componente, ele tem um token válido
   useEffect(() => { // Hook de efeito
     if (token === '') { // Se o token estiver vazio
-      alert("Você precisa estar logado!") // Exibe um alerta
+      ToastAlerta("Você precisa estar logado!", "info") // Exibe um alerta
       navigate('/') // Navega para a página inicial
     }
   }, [token])
@@ -82,12 +83,12 @@ function FormTema() {
         await atualizar(`/temas`, tema, setTema, { // Chama a service de Atualizar
           headers: { 'Authorization': token } // Passa o token do usuário logado no cabeçalho da requisição
         })
-        alert("O Tema foi atualizado com sucesso!") // Exibe um alerta 
+        ToastAlerta("O Tema foi atualizado com sucesso!", "sucesso") // Exibe um alerta 
       } catch (error: any) { // Trata o erro
         if (error.toString().includes('403')) { // Se o erro for 403
           handleLogout() // Desconecta o usuário
         } else { // Senão
-          alert("Erro ao atualizar o tema") // Exibe um alerta
+          ToastAlerta("Erro ao atualizar o tema", "erro") // Exibe um alerta
         }
       }
     } else {  // Se o ID não existir é um processo de cadastro
@@ -95,12 +96,12 @@ function FormTema() {
         await cadastrar(`/temas`, tema, setTema, { // Chama a service de Cadastrar
           headers: { 'Authorization': token } // Passa o token do usuário logado no cabeçalho da requisição
         }) // Faz a requisição para a API
-        alert("O Tema foi cadastrado com sucesso!") // Exibe um alerta
+        ToastAlerta("O Tema foi cadastrado com sucesso!", "sucesso") // Exibe um alerta
       } catch (error: any) { // Trata o erro
         if (error.toString().includes('403')) { // Se o erro for 403
           handleLogout() // Desconecta o usuário
         } else { // Senão
-          alert("Erro ao cadastrar o tema") // Exibe um alerta
+          ToastAlerta("Erro ao cadastrar o tema", "erro") // Exibe um alerta
         }
       }
     }

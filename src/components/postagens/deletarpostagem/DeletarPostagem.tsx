@@ -6,6 +6,7 @@ import Postagem from "../../../models/Postagem";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { buscar, deletar } from "../../../services/Service";
 import { RotatingLines } from "react-loader-spinner"
+import { ToastAlerta } from "../../../utils/ToastAlert";
 
 
 function DeletarPostagem() {
@@ -39,7 +40,7 @@ function DeletarPostagem() {
   // Esse useEffect verifica se quando o usuário acessou esse componente, ele tem um token válido
   useEffect(() => { // Hook de efeito para verificar se o usuário está logado
     if (token === "") { // Se o token estiver vazio
-      alert("Você precisa estar logado"); // Avisa o usuário
+      ToastAlerta("Você precisa estar logado", "info"); // Avisa o usuário
       navigate("/"); // Redireciona para a página inicial
     }
   }, [token]) // Array de dependências
@@ -62,12 +63,12 @@ function DeletarPostagem() {
           'Authorization': token // Token de autenticação
         }
       })
-      alert("Postagem apagada com sucesso"); // Avisa o usuário
+      ToastAlerta("Postagem apagada com sucesso", "sucesso"); // Avisa o usuário
     } catch (error: any) { // Trata erros
       if (error.toString().includes("403")) { // Se o erro for 403
         handleLogout(); // Desloga o usuário
       } else { // Se não
-        alert("Erro ao deletar a postagem") // Avisa o usuário
+        ToastAlerta("Erro ao deletar a postagem", "erro") // Avisa o usuário
       }
     }
 

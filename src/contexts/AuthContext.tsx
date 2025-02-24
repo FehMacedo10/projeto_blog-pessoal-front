@@ -3,6 +3,7 @@
 import { createContext, ReactNode, useState } from "react";
 import UsuarioLogin from "../models/UsuarioLogin";
 import { login } from "../services/Service";
+import { ToastAlerta } from "../utils/ToastAlert";
 
 //? O que é Contexto? 
 //* O Contexto é uma forma de compartilhar informações entre componentes sem precisar passar propriedades manualmente em cada componente filho até chegar no componente que precisa da informação compartilhada.  
@@ -44,9 +45,9 @@ export function AuthProvider({ children }: AuthProviderProps) { // Criando o com
     setIsLoading(true) // Indicando que está carregando
     try {
       await login("/usuarios/logar", usuarioLogin, setUsuario) // Chama a Service login
-      alert("O Usuário foi autenticado com sucesso!")
+      ToastAlerta("Usuário foi autenticado com sucesso!", "sucesso")
     } catch (error) { // Tratando o erro
-      alert("Os Dados do usuário estão inconsistentes!")
+      ToastAlerta("Os dados do Usuário estão inconsistentes!", "erro")
     }
     setIsLoading(false) // Atualiza a Variavel de Estado, indicando que o carregamento parou
   }

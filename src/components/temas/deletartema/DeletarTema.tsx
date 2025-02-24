@@ -6,6 +6,7 @@ import { AuthContext } from "../../../contexts/AuthContext"
 import Tema from "../../../models/Tema"
 import { buscar, deletar } from "../../../services/Service"
 import { RotatingLines } from "react-loader-spinner"
+import { ToastAlerta } from "../../../utils/ToastAlert"
 
 function DeletarTema() { // Função que define o componente DeletarTema
 
@@ -43,7 +44,7 @@ function DeletarTema() { // Função que define o componente DeletarTema
   // Esse useEffect verifica se quando o usuário acessou esse componente, ele tem um token válido
   useEffect(() => { // Hook de efeito
     if (token === '') { // Se o token for vazio
-      alert('Você precisa estar logado') // Alerta que o usuário precisa estar logado
+      ToastAlerta('Você precisa estar logado', "info") // Alerta que o usuário precisa estar logado
       navigate('/') // Navega para a rota inicial
     }
   }, [token]) // Dependência do hook
@@ -65,12 +66,12 @@ function DeletarTema() { // Função que define o componente DeletarTema
       await deletar(`/temas/${id}`, { // Chama a service Deletar
         headers: { 'Authorization': token } // Define o cabeçalho da requisição
       })
-      alert('Tema deletado com sucesso') // Alerta que o tema foi deletado com sucesso
+      ToastAlerta('Tema deletado com sucesso', "sucesso") // Alerta que o tema foi deletado com sucesso
     } catch (error: any) { // Tratamento de erro
       if (error.toStrig().includes("403")) { // Se o erro for 403
         handleLogout() // Desloga o usuário
       } else { // Senão
-        alert('Erro ao deletar o tema') // Alerta que houve um erro ao deletar o tema
+        ToastAlerta('Erro ao deletar o tema', "erro") // Alerta que houve um erro ao deletar o tema
       }
     }
 

@@ -6,6 +6,7 @@ import Usuario from '../../models/Usuario'; // Importando a interface Usuario
 import { cadastrarUsuario } from '../../services/Service'; // Importando a função de cadastro de usuário
 import './Cadastro.css'; // Importando o arquivo de estilização
 import { RotatingLines } from 'react-loader-spinner'; // Importando o componente de loading
+import { ToastAlerta } from '../../utils/ToastAlert';
 
 function Cadastro() { // Função que representa a tela de cadastro
 
@@ -76,14 +77,14 @@ function Cadastro() { // Função que representa a tela de cadastro
 
       try { // Tenta executar uma função que pode retornar erro
         await cadastrarUsuario('/usuarios/cadastrar', usuario, setUsuario)  // Chama a Service cadastrarUsuario
-        alert('Usuário cadastrado com sucesso!') // Exibe um alerta de sucesso
+        ToastAlerta("Usuário cadastrado com sucesso!", "sucesso") // Exibe um alerta de sucesso
 
       } catch (error) { // Tratamento de erro
-        alert('Erro ao cadastrar usuário!') // Exibe um alerta de erro
+        ToastAlerta("Erro ao cadastrar usuário!", "erro") // Exibe um alerta de erro
 
       }
     } else { // Caso as senhas não sejam iguais
-      alert('Dados do usuário inconsistentes! Verifiquem as informações do cadastro') // Exibe um alerta de erro
+      ToastAlerta("Dados do usuário inconsistentes! Verifiquem as informações do cadastro", "info") // Exibe um alerta de erro
       setUsuario({ ...usuario, senha: "" }) // Limpa o campo de senha
       setConfirmaSenha("") // Limpa o campo de confirmação de senha
     }
